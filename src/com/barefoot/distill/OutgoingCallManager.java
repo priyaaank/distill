@@ -17,7 +17,7 @@ public class OutgoingCallManager {
     this.context = context;
     this.currentOutgoingNumber = new PhoneNumber(outgoingNumber);
     registry = ConstraintRegistry.Instance();
-    registry.RegisterConstraints(new OnlyTwoCallsPerWeek(context, this.currentOutgoingNumber));
+    registry.RegisterConstraints(new OnlyCallInGodlyHours(context), new OnlyTwoCallsPerWeek(context, this.currentOutgoingNumber), new AlwaysBlockCall(context));
     this.numberRepository = new NumberRepository(registry);
   }
 
@@ -37,7 +37,6 @@ public class OutgoingCallManager {
     if(constraints != null  && constraints.size() > 0) {
       if(anyConstraintApplicable(constraints)) outgoingCallListener.setNumberToBeDialled(null);
     }
-    Toast.makeText(context, "This call is going to be blocked for number " + currentOutgoingNumber, Toast.LENGTH_LONG).show();
   }
 
   private boolean anyConstraintApplicable(List<IOutgoingCallConstraints> constraints) {
@@ -46,6 +45,7 @@ public class OutgoingCallManager {
         return true;
       }
     }
+    Toast.makeText(context, "This call is going to be allowed " + currentOutgoingNumber, Toast.LENGTH_LONG).show();
     return false;
   }
 }

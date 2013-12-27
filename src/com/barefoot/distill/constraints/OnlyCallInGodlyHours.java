@@ -9,7 +9,7 @@ public class OnlyCallInGodlyHours implements IOutgoingCallConstraints {
   private Context context;
 
   private static int GODLY_HOUR_START = 10;
-  private static int GODLY_HOUR_END = 8;
+  private static int GODLY_HOUR_END_SEVEN_FIFTY_NINE = 19;
   public static final Integer ID = new Integer(1);
 
   public OnlyCallInGodlyHours(Context context) {
@@ -25,7 +25,7 @@ public class OnlyCallInGodlyHours implements IOutgoingCallConstraints {
   public boolean shouldDropCall() {
     Calendar today = Calendar.getInstance();
     int currentHour = today.get(Calendar.HOUR_OF_DAY);
-    return (GODLY_HOUR_START <= currentHour && currentHour <= GODLY_HOUR_END);
+    return (GODLY_HOUR_START > currentHour || currentHour > GODLY_HOUR_END_SEVEN_FIFTY_NINE);
   }
 
   @Override
