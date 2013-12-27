@@ -9,7 +9,12 @@ public class OutgoingCallListener extends BroadcastReceiver {
   @Override
   public void onReceive(Context context, Intent intent) {
     String outgoingNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
-    new OutgoingCallManager(context, outgoingNumber).process();
+    new OutgoingCallManager(context, outgoingNumber).process(this);
+  }
+
+  public void setNumberToBeDialled(PhoneNumber numberToBeDialled) {
+    String phoneNumberToDial = numberToBeDialled == null ? null : numberToBeDialled.phoneNumberInRawFormat();
+    setResultData(phoneNumberToDial);
   }
 
 }
