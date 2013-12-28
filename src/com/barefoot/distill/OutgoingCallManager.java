@@ -1,6 +1,7 @@
 package com.barefoot.distill;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 import com.barefoot.distill.constraints.*;
 
@@ -22,6 +23,7 @@ public class OutgoingCallManager {
   }
 
   public void process(OutgoingCallListener outgoingCallListener) {
+    if(!isDistillationEnabled()) return;
     if(numberRepository.isSuperNumber(currentOutgoingNumber))
       allowCallToGoThrough(outgoingCallListener);
     else
@@ -47,5 +49,9 @@ public class OutgoingCallManager {
     }
     Toast.makeText(context, "This call is going to be allowed " + currentOutgoingNumber, Toast.LENGTH_LONG).show();
     return false;
+  }
+
+  private boolean isDistillationEnabled() {
+    return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getBoolean(Distill.APP_ENABLED_CONFIG_KEY, true);
   }
 }

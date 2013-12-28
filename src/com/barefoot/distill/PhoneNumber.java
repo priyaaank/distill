@@ -2,8 +2,6 @@ package com.barefoot.distill;
 
 public class PhoneNumber {
 
-  private static final String STD_CODE_ZERO = "0";
-
   private String numberInRawFormat;
 
   public PhoneNumber(String number) {
@@ -16,7 +14,7 @@ public class PhoneNumber {
 
   private void extractNumber(String number) {
     if(number == null) this.numberInRawFormat = null;
-    this.numberInRawFormat = number;
+    this.numberInRawFormat = number.replace(" ", "");
   }
 
 }

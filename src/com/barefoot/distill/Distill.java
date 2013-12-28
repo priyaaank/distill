@@ -4,12 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 
 public class Distill extends Activity {
 
-  private static final String APP_ENABLED = "distill_enabled";
+  public static final String APP_ENABLED_CONFIG_KEY = "distill_enabled";
   private SharedPreferences preferences;
 
   @Override
@@ -17,7 +18,7 @@ public class Distill extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
-    preferences = this.getPreferences(Context.MODE_PRIVATE);
+    preferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
     updateButtonStateBasedOnStoredData();
     attachClickListenerToButton();
   }
@@ -27,7 +28,7 @@ public class Distill extends Activity {
     configButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        preferences.edit().putBoolean(APP_ENABLED, !isConfigEnabled()).commit();
+        preferences.edit().putBoolean(APP_ENABLED_CONFIG_KEY, !isConfigEnabled()).commit();
         updateButtonStateBasedOnStoredData();
       }
     });
@@ -46,7 +47,7 @@ public class Distill extends Activity {
   }
 
   private boolean isConfigEnabled() {
-    return preferences.getBoolean(APP_ENABLED, true);
+    return preferences.getBoolean(APP_ENABLED_CONFIG_KEY, true);
   }
 
 }
