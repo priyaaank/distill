@@ -44,10 +44,11 @@ public class OutgoingCallManager {
   private boolean anyConstraintApplicable(List<IOutgoingCallConstraints> constraints) {
     for(IOutgoingCallConstraints constraint : constraints) {
       if(constraint.shouldDropCall()) {
+        Toast.makeText(context.getApplicationContext(), "This class is going to be blocked " + currentOutgoingNumber, Toast.LENGTH_LONG).show();
         return true;
       }
     }
-    Toast.makeText(context, "This call is going to be allowed " + currentOutgoingNumber, Toast.LENGTH_LONG).show();
+    Toast.makeText(context.getApplicationContext(), "This call is going to be allowed " + currentOutgoingNumber, Toast.LENGTH_LONG).show();
     return false;
   }
 
