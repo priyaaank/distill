@@ -1,12 +1,13 @@
 package com.barefoot.distill;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class Distill extends Activity {
 
@@ -28,13 +29,21 @@ public class Distill extends Activity {
     configButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        preferences.edit().putBoolean(APP_ENABLED_CONFIG_KEY, !isConfigEnabled()).commit();
-        updateButtonStateBasedOnStoredData();
+          String passcode = ((EditText)Distill.this.findViewById(R.id.passcode)).getText().toString().trim();
+          if("240782".equalsIgnoreCase(passcode))
+            updateConfig();
+          else
+              Toast.makeText(Distill.this.getApplicationContext(), "Passcode invalid", Toast.LENGTH_SHORT);
       }
     });
   }
 
-  private void updateButtonStateBasedOnStoredData() {
+    private void updateConfig() {
+        preferences.edit().putBoolean(APP_ENABLED_CONFIG_KEY, !isConfigEnabled()).commit();
+        updateButtonStateBasedOnStoredData();
+    }
+
+    private void updateButtonStateBasedOnStoredData() {
     boolean isAppEnabled = isConfigEnabled();
     Button appEnabledConfigButton = (Button) findViewById(R.id.distill_config);
     if(isAppEnabled) {

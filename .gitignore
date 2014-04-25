@@ -4,3 +4,5 @@ Distill.iml
 bin/
 gen/
 out/
+.idea/
+.DS_STORE
